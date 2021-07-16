@@ -1,0 +1,21 @@
+<div class="ui floated dropdown icon item"
+     id="websnacks-admin-notifications-wrapper"
+     data-frequency="{{ frequency }}"
+     data-limit="{{ limit }}"
+     data-url="{{ path('websnacks_sylius_admin_notification_plugin.admin.notifications_list') }}"
+     data-template="{% filter escape %}{% include 'Admin/Notification/_single.html.twig' %}{% endfilter %}"
+     data-empty-template="{% filter escape %}{% include 'Admin/Notification/_empty.html.twig' %}{% endfilter %}"
+     data-loader-template="{% filter escape %}{% include 'Admin/Notification/_loader.html.twig' %}{% endfilter %}"
+>
+    <i class="inbox icon"></i>
+    <div class="ui top right teal label hidden" data-counter id="websnacks-admin-notifications-counter"></div>
+    <div class="menu compact">
+        <div class="header ui grid">
+                <div class="fourteen wide column">{{ 'websnacks.ui.notifications'|trans }} (<span data-counter>0</span>)</div>
+                <div class="one wide column"><a href="{{ path('websnacks_sylius_admin_notification_plugin.admin.mark_as_read') }}" data-notification-id="all" class="websnacks-mark-all-as-read"><i class="dot circle outline icon" title="{{ 'websnacks.ui.mark_all_as_read'|trans }}"></i> </a></div>
+        </div>
+        <div class="scrolling menu simple" id="websnacks-admin-notifications" style="width: 300px;">
+            {% include 'Admin/Notification/_loader.html.twig' %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+#websnacks-admin-notifications-wrapper .menu {
+    min-width: 300px;
+    max-width: 500px;
+}
+
+#websnacks-admin-notifications-wrapper .menu.scrolling::-webkit-scrollbar-track {
+    background: white;
+}
+
+#websnacks-admin-notifications-wrapper .menu.scrolling::-webkit-scrollbar-thumb {
+    background-color: #00b5ad;
+    border-radius: 20px;
+    border: 3px solid white;
+}
+
+#websnacks-admin-notifications-wrapper .menu.scrolling {
+    scrollbar-color: #00b5ad white;
+    scrollbar-width: thin;
+}
+
+#websnacks-admin-notifications .loader-wrapper {
+    margin-top: 30px;
+}
+
+#websnacks-admin-notifications .admin-notification.unseen {
+    background: #f2f2f2 !important;
+}
+
+#websnacks-admin-notifications .admin-notification .content {
+    white-space: normal;
+}
+
+#websnacks-admin-notifications .admin-notification .footer {
+    padding-top: 10px;
+    width: 100%;
+}
+
+#websnacks-admin-notifications .admin-notification .footer .actions {
+    float: right;
+    visibility: hidden;
+    opacity:0;
+    transition:opacity 0.5s linear;
+}
+
+#websnacks-admin-notifications .admin-notification:hover .footer .actions {
+    visibility: visible;
+    opacity:1;
+}
+#websnacks-admin-notifications .admin-notification .time {
+    color: #666666;
+    font-size: 0.7em;
+}
+
+#websnacks-admin-notifications .admin-notification .time .icon {
+    margin: 0 !important;
+}

@@ -1,0 +1,15 @@
+<div class="item ui grid admin-notification">
+    <div class="sixteen wide column row">
+        <div class="content">
+           ||message||
+        </div>
+        <div class="footer ui grid">
+            <div class="fourteen wide column time">
+                <i class="clock outline icon teal"></i> ||created||
+            </div>
+            <div class="one wide column actions">
+                <a href="{{ path('websnacks_sylius_admin_notification_plugin.admin.mark_as_read') }}" class="mark-as-read" data-notification-id="||id||"><i class="dot circle outline icon" title="{{ 'websnacks.ui.mark_as_read'|trans }}"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

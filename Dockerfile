@@ -5,7 +5,7 @@ ARG PHP_VERSION=7.3
 ARG NODE_VERSION=10
 ARG NGINX_VERSION=1.16
 
-FROM php:${PHP_VERSION}-fpm-alpine AS sylius_php
+FROM php:${PHP_VERSION}-fpm-alpine3.13 AS sylius_php
 
 # persistent / runtime deps
 RUN apk add --no-cache \
@@ -76,9 +76,9 @@ WORKDIR /srv/sylius
 ARG APP_ENV=prod
 
 # prevent the reinstallation of vendors at every changes in the source code
-COPY composer.json composer.lock symfony.lock ./
+COPY composer.json symfony.lock ./
 RUN set -eux; \
-	composer install --prefer-dist --no-autoloader --no-scripts --no-progress --no-suggest; \
+	COMPOSER_MEMORY_LIMIT=-1 composer install --prefer-dist --no-autoloader --no-scripts --no-progress --no-suggest; \
 	composer clear-cache
 
 # copy only specifically what we need
@@ -107,7 +107,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
-FROM node:${NODE_VERSION}-alpine AS sylius_nodejs
+FROM node:${NODE_VERSION}-alpine:3.10 AS sylius_nodejs
 
 WORKDIR /srv/sylius
 

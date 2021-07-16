@@ -2,6 +2,20 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en_US
+    websnacks_sylius_admin_notification_plugin.model.notification.class: App\Entity\Notification
+    websnacks_sylius_admin_notification_plugin.repository.notification.class: App\Repository\NotificationRepository
+    websnacks_sylius_admin_notification_plugin.model.notification.interface: App\Entity\NotificationInterface
+
+    # Notifications:    
+    websnacks_sylius_admin_notification_plugin.default_notifications:
+        websnacks.system:
+            class: App\Model\SystemNotification
+        websnacks.system.new_review:
+            class: App\Model\NewReviewNotification
+            translation: websnacks.notification.new_review
+        websnacks.system.order_complete:
+            class: App\Model\OrderCompleteNotification
+            translation: websnacks.notification.order_complete
 
 services:
     # Default configuration for services in *this* file
@@ -33,3 +47,61 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+#    websnacks_sylius_admin_notification_plugin.controller.admin.mark_as_read:
+#        class: App\Controller\Admin\MarkAsRead
+#        public: true
+#        arguments:
+#            - '@websnacks_sylius_admin_notification_plugin.manager.notification_manager'
+#            - '@security.token_storage'
+#
+#    websnacks_sylius_admin_notification_plugin.controller.admin.notifications_list:
+#        class: App\Controller\Admin\NotificationsList
+#        public: true
+#        arguments:
+#            - '@websnacks_sylius_admin_notification_plugin.manager.notification_manager'
+#            - '@security.token_storage'
+#            - '@router'
+#
+#    websnacks_sylius_admin_notification_plugin.manager.notification_manager:
+#        class: App\Manager\NotificationManager
+#        arguments:
+#            - '@websnacks_sylius_admin_notification_plugin.repository.notification'
+#            - '@websnacks_sylius_admin_notification_plugin.factory.notification_factory'
+#            - '@sylius.repository.admin_user'
+#            - '@sylius.manager.taxon'
+
+    websnacks_sylius_admin_notification_plugin.block_event_listener.admin.layout.stylesheets:
+        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+        arguments:
+            - 'Admin/_stylesheets.html.twig'
+        tags:
+        - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.layout.stylesheets, method: onBlockEvent }
+
+    websnacks_sylius_admin_notification_plugin.block_event_listener.admin.layout.javascripts:
+        class: Sylius\Bundle\UiBundle\Block\BlockEventListener
+        arguments:
+            - Admin/_javascripts.html.twig
+        tags:
+            - { name: kernel.event_listener, event: sonata.block.event.sylius.admin.layout.javascripts, method: onBlockEvent }
+
+    App\Context\NotificationContext:
+        arguments:
+            - '%websnacks_sylius_admin_notification_plugin.default_notifications%'
+
+    websnacks_sylius_admin_notification_plugin.factory.notification_factory:
+        class: App\Factory\NotificationFactory
+        arguments:
+            - '@websnacks_sylius_admin_notification_plugin.context.notification_context'
+            - "@translator"
+
+#    websnacks_sylius_admin_notification_plugin.listener.order_complete:
+#        class: App\EventListener\OrderCompleteListener
+#        arguments:
+#            - '@websnacks_sylius_admin_notification_plugin.manager.notification_manager'
+#            - '@sylius.money_formatter'
+#        tags:
+#            - { name: kernel.event_listener, event: sylius.order.pre_complete, method: addNotification }
+#
+    App\EventListener\NewReviewListener:
+        tags:
+            - { name: kernel.event_listener, event: sylius.product_review.post_create, method: addNotification }

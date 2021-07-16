@@ -255,3 +255,11 @@ sylius_theme:
             scan_depth: 1
             directories:
                 - "%kernel.project_dir%/themes"
+
+sylius_ui:
+    events:
+        sylius.admin.layout.topbar_right:
+            blocks:
+                adminNotifications:
+                    template: "Admin/Layout/_notificationWidget.html.twig"
+                    priority: 40

@@ -5,3 +5,15 @@ sylius_admin:
 sylius_paypal_admin:
     resource: "@SyliusPayPalPlugin/Resources/config/admin_routing.yml"
     prefix: '/%sylius_admin.path_name%'
+
+websnacks_sylius_admin_notification_plugin.admin.notifications_list:
+    path: /admin/notifications/list
+    methods: [GET]
+    defaults:
+        _controller: App\Controller\Admin\Notification\NotificationList
+
+websnacks_sylius_admin_notification_plugin.admin.mark_as_read:
+    path: /admin/notifications/read
+    methods: [POST]
+    defaults:
+        _controller: App\Controller\Admin\Notification\ReadNotification
