@@ -17,3 +17,17 @@ websnacks_sylius_admin_notification_plugin.admin.mark_as_read:
     methods: [POST]
     defaults:
         _controller: App\Controller\Admin\Notification\ReadNotification
+
+app_admin_product_additional_options:
+    path: /admin/products/{id}/additionals
+    methods: [GET, PUT, PATCH]
+    defaults:
+        _controller: sylius.controller.product:updateAction
+        _sylius:
+            section: admin
+            form: App\Form\Type\ProductAdditionalOptionsType
+            template: "Admin/Product/additionalOptions.html.twig"
+            redirect:
+                route: app_admin_product_additional_options
+                parameters:
+                    id: $id

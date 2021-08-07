@@ -11,6 +11,6 @@ use Sylius\Component\Core\Model\Adjustment as BaseAdjustment;
  * @ORM\Entity
  * @ORM\Table(name="sylius_adjustment")
  */
-class Adjustment extends BaseAdjustment
+class Adjustment extends BaseAdjustment implements AdjustmentInterface
 {
 }

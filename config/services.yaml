@@ -93,15 +93,16 @@ services:
         arguments:
             - '@websnacks_sylius_admin_notification_plugin.context.notification_context'
             - "@translator"
-
-#    websnacks_sylius_admin_notification_plugin.listener.order_complete:
-#        class: App\EventListener\OrderCompleteListener
-#        arguments:
-#            - '@websnacks_sylius_admin_notification_plugin.manager.notification_manager'
-#            - '@sylius.money_formatter'
-#        tags:
-#            - { name: kernel.event_listener, event: sylius.order.pre_complete, method: addNotification }
-#
     App\EventListener\NewReviewListener:
         tags:
             - { name: kernel.event_listener, event: sylius.product_review.post_create, method: addNotification }
+
+    App\Form\Type\ProductAdditionalOptionsType:
+       class:  App\Form\Type\ProductAdditionalOptionsType
+       public: true
+       arguments: 
+            - '%sylius.model.product.class%'
+            - ['sylius']
+            - '@sylius.repository.product'
+       tags:
+           - { name: form.type }

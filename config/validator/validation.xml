@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="App\Entity\Product\ProductAdditionalOption">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">
+                <value>product</value>
+                <value>name</value>
+            </option>
+            <option name="errorPath">product</option>
+            <option name="message">app.product_additional_option.unique</option>
+            <option name="groups">sylius</option>
+        </constraint>
+        <property name="price">
+            <constraint name="Range">
+                <option name="min">0.01</option>
+                <option name="minMessage">app.product_additional_option.price.min</option>
+                <option name="groups">sylius</option>
+            </constraint>
+        </property>
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">app.product_additional_option.code.not_blank</option>
+                <option name="groups">sylius</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">1</option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

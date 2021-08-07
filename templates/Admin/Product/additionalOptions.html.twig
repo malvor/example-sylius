@@ -1,0 +1,36 @@
+{% extends '@SyliusAdmin/Crud/update.html.twig' %}
+
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+{% import '@SyliusAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
+
+{% set breadcrumbs = [
+    { label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
+    { label: (metadata.applicationName~'.ui.'~metadata.pluralName)|trans, url: path(configuration.getRouteName('index'), configuration.vars.route.parameters|default({})) },
+    { label: resource.code|default(resource.id)},
+    { label: 'app.ui.manage_pricings'|trans }
+]
+%}
+
+{% block content %}
+    <div class="ui stackable column grid">
+        <div class="column">
+            {{ headers.default('app.ui.additional_options'|trans, configuration.vars.icon|default('pencil'), configuration.vars.subheader|default(null)|trans) }}
+            {{ breadcrumb.crumble(breadcrumbs) }}
+        </div>
+    </div>
+
+    <div class="ui segment">
+        {{ form_start(form, {'action': path('app_admin_product_additional_options', configuration.vars.route.parameters|default({ 'id': resource.id })), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+        <input type="hidden" name="_method" value="PATCH" />
+        {% if configuration.vars.templates.form is defined %}
+            {% include configuration.vars.templates.form %}
+        {% else %}
+            {{ form_widget(form) }}
+        {% endif %}
+
+        {{ sonata_block_render_event(event_prefix ~ '.form', {'resource': resource}) }}
+
+        {% include '@SyliusUi/Form/Buttons/_update.html.twig' with {'paths': {'cancel': path('sylius_admin_product_update', configuration.vars.route.parameters|default({ 'id': resource.id }))}} %}
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+{% endblock %}
